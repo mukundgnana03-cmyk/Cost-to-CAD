@@ -1,6 +1,6 @@
 # Developer reference
 
-The default deployment is now one application using the root Dockerfile and render.yaml. Netlify configuration below is an optional frontend-only route, not required for the single-application setup.
+This reference covers the full Blender application, packaged as one service using the root Dockerfile and render.yaml. The public Netlify playground is documented in the root README; the advanced Netlify proxy configuration below is optional for the full application.
 
 # FORM — CAD engineering workspace
 
@@ -10,7 +10,7 @@ Working local prototype built with React, TypeScript, Three.js, FastAPI, OpenCas
 
 [Deploy to Netlify](https://app.netlify.com/start/deploy?repository=https%3A%2F%2Fgithub.com%2Fmukundgnana03-cmyk%2FCost-to-CAD) (requires your Netlify login).
 
-The root `netlify.toml` builds the React interface. Set **CAD_BACKEND_URL** in the Netlify site's build environment to the **HTTPS origin** of your running Docker backend, for example `https://cad-api.your-domain.com` (use your actual server). Redeploy after setting it. API calls and artifacts use a same-origin Netlify proxy, so no frontend API key or permissive CORS is needed. For a login-protected backend, retain its authentication; Netlify must be able to reach it.
+The Netlify default is now the self-contained browser playground. For the advanced frontend proxy path described here, explicitly override `VITE_PLAYGROUND=false`. The root `netlify.toml` builds the React interface. Set **CAD_BACKEND_URL** in the Netlify site's build environment to the **HTTPS origin** of your running Docker backend, for example `https://cad-api.your-domain.com` (use your actual server). Redeploy after setting it. API calls and artifacts use a same-origin Netlify proxy, so no frontend API key or permissive CORS is needed. For a login-protected backend, retain its authentication; Netlify must be able to reach it.
 
 Without CAD_BACKEND_URL, the interface deploys with an explicit processing-server message and its Analyze button disabled. It does not simulate successful uploads. Netlify's static hosting cannot run OpenCascade or Blender; the Docker backend must be deployed on a separate server. Netlify proxy upload/response limits may be below this prototype's 200 MB local limit, so test representative file sizes and your site's plan limits before relying on large assemblies. Use the full-stack HTTPS server deployment instead for large uploads.
 

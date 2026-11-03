@@ -19,6 +19,7 @@ import {
 import Viewer from "./Viewer";
 import type { MeshData, Project, Version } from "./types";
 import "./style.css";
+const Playground = React.lazy(() => import("./playground/Playground"));
 const sections = [
   "Part photographs",
   "Part description",
@@ -818,4 +819,14 @@ function Section({
     </section>
   );
 }
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  import.meta.env.VITE_PLAYGROUND === "true" ? (
+    <React.Suspense
+      fallback={<p style={{ padding: 40 }}>Opening CAD playground…</p>}
+    >
+      <Playground />
+    </React.Suspense>
+  ) : (
+    <App />
+  ),
+);

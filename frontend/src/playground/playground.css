@@ -1,0 +1,103 @@
+.play-limits {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #8da1b5;
+  border-left: 2px solid #88704f;
+  padding: 8px 13px;
+  margin: -12px 0 24px;
+  background: #191f27;
+}
+.playground .photo {
+  display: block;
+}
+.playground .download {
+  background: #1b2531;
+  color: #bbcadb;
+}
+.playground .originals button {
+  border: 0;
+  background: transparent;
+  font-size: 10px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #d8b58a;
+}
+.playground .chat-body > p {
+  font-size: 10px;
+  line-height: 1.9;
+}
+.share-notice {
+  font-size: 12px;
+  color: #aac6ac;
+}
+.playground .processing small {
+  color: #819487;
+  margin-left: auto;
+}
+.playground .gallery img {
+  object-fit: contain;
+}
+.playground .brand {
+  letter-spacing: 2px;
+}
+.playground .upload-card {
+  flex-wrap: wrap;
+}
+.playground .upload-copy {
+  min-width: 200px;
+}
+.playground .description-main h3 {
+  font-weight: 500;
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+.playground .chat form textarea {
+  min-height: 55px;
+}
+@media (max-width: 800px) {
+  .playground .page-heading {
+    display: block;
+  }
+  .playground .page-heading > .section-tag {
+    display: inline-block;
+    margin-top: 15px;
+  }
+  .playground .processing {
+    flex-wrap: wrap;
+  }
+  .playground .processing small {
+    margin-left: 0;
+  }
+  .playground .section-tag {
+    max-width: 120px;
+    white-space: normal;
+    text-align: center;
+  }
+}
+.playground .selection-info select {
+  max-width: 100%;
+}
+.playground header .breadcrumbs {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.playground header .breadcrumbs strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.playground header .button {
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+@media (max-width: 800px) {
+  .playground header .breadcrumbs {
+    font-size: 9px;
+  }
+  .playground header .button {
+    font-size: 9px;
+    padding: 8px;
+  }
+}

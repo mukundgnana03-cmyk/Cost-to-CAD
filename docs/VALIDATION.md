@@ -35,3 +35,13 @@ The default deployment now bundles the React build, FastAPI, OpenCascade and Ble
 - Single-service Compose and the optional HTTPS ingress override: configuration validation passed.
 - Render blueprint added for one hosted application with persistent model storage. No live Render deployment is claimed; account login and confirmation of the provider's compute/storage plan are still needed.
 - Final persistent-disk startup check: a deliberately root-owned mounted volume was initialized successfully; the web interface and health API returned HTTP 200 on the same port, Blender was available, model storage was writable, and the main application process ran as UID 10001.
+
+## Self-contained Netlify playground
+
+A separate compile-time browser mode is now the default for Netlify (`VITE_PLAYGROUND=true`). It uses Replicad 0.20.5 and its matching OpenCascade WebAssembly build 0.20.2 inside a worker. Netlify serves the static interface, worker and WASM; no CAD service or API credential is needed by visitors.
+
+The production-build browser smoke test passed: sample volume 45,587.257 mm³; actual uploaded calibration STEP dimensions 20 × 30 × 40 mm, volume 24,000 mm³ and area 5,200 mm²; four WebGL image downloads; selected-edge fillet reducing volume; exact original-file hash preservation; original version preservation; a machined appearance without geometry change; valid revised STEP download; mobile layout without horizontal overflow; separate empty session for a second visitor. No backend API requests or JavaScript page errors occurred.
+
+These are explicitly WebGL previews, not Blender results. AI interpretation, native CATIA, assembly BOM hierarchy and metadata are not claimed in this mode. Original full-application behavior remains available outside the Netlify build mode. No Netlify site has been created or verified from this workspace: Netlify authentication is still absent.
+
+Additional browser checks passed for chamfering an original STEP edge, preserving state after an unsupported boss-removal command, exporting the chamfered model and reimporting its STEP file with the same measured volume. Both the full-application build and the static playground build compiled successfully.
