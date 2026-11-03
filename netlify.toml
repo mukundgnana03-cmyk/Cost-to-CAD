@@ -1,0 +1,13 @@
+[build]
+  base = "frontend"
+  publish = "dist"
+  command = "npm ci && npm run build && node ../deploy/netlify-redirects.mjs"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "same-origin"

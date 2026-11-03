@@ -1,0 +1,28 @@
+{
+  "name": "form-cad",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.0.6",
+    "@react-three/fiber": "9.1.2",
+    "lucide-react": "0.468.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "three": "0.175.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
+    "@types/three": "0.175.0",
+    "@vitejs/plugin-react": "4.4.1",
+    "prettier": "^3.5.3",
+    "typescript": "5.8.3",
+    "vite": "6.3.5"
+  }
+}

@@ -1,0 +1,21 @@
+# Run from the repository root together with compose.yaml.
+services:
+  ingress:
+    image: caddy:2.10-alpine
+    environment:
+      CAD_DOMAIN: ${CAD_DOMAIN:?Set the app domain in .env}
+      CAD_AUTH_USER: ${CAD_AUTH_USER:-engineer}
+      CAD_AUTH_HASH: ${CAD_AUTH_HASH:?Set a bcrypt password hash in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - frontend
+    restart: unless-stopped
+volumes:
+  caddy-data:
+  caddy-config:

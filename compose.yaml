@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      CAD_AI_API_KEY: ${CAD_AI_API_KEY:-}
+      CAD_AI_MODEL: ${CAD_AI_MODEL:-gpt-6}
+    volumes:
+      - cad-data:/data
+    restart: unless-stopped
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  cad-data:
