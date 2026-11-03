@@ -21,11 +21,11 @@ with sync_playwright() as p:
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.goto(args.url)
+    page.wait_for_function("document.body.textContent.includes('OpenCascade engine')")
     assert len(page.locator("h2").all_text_contents()) == 5
     page.locator("input[type=file]").set_input_files(
         str(root / "samples/mounting_plate.step")
     )
-    page.get_by_role("button", name="Analyze model", exact=True).click()
     page.wait_for_function(
         "document.querySelectorAll('.gallery img').length === 4", timeout=180000
     )

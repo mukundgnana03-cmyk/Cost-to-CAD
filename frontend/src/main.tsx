@@ -123,19 +123,22 @@ function App() {
       return;
     }
     setFiles(f);
+    if (f.length === 1 && health) {
+      upload(f, f[0].name);
+    }
     setPrimary(
       f.find((x) => /catproduct$/i.test(x.name))?.name || f[0]?.name || "",
     );
     setError("");
   }
-  function upload() {
-    if (!files.length) return;
+  function upload(uploadFiles: File[] = files, primaryName: string = primary) {
+    if (!uploadFiles.length || uploading) return;
     setUploading(true);
     setError("");
     setProgress(0);
     const data = new FormData();
-    files.forEach((f) => data.append("files", f));
-    data.append("primary", primary);
+    uploadFiles.forEach((f) => data.append("files", f));
+    data.append("primary", primaryName);
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/projects");
     xhr.upload.onprogress = (e) => {
@@ -285,8 +288,11 @@ function App() {
               <Upload size={24} />
             </div>
             <div className="upload-copy">
-              <h3>Bring your design into focus</h3>
-              <p>Drop your CAD files here, or browse to get started.</p>
+              <h3>Upload your model. Get your results.</h3>
+              <p>
+                Drop a CAD model here or choose a file. Analysis starts
+                automatically.
+              </p>
               <div className="file-tags">
                 <span>STEP / STP</span>
                 <span>CATPart</span>
@@ -295,7 +301,8 @@ function App() {
               </div>
             </div>
             <label className="button primary">
-              Browse files <ArrowUpRight size={16} />
+              {uploading ? `Uploading ${progress}%` : "Upload 3D model"}{" "}
+              <ArrowUpRight size={16} />
               <input
                 type="file"
                 multiple
@@ -320,7 +327,7 @@ function App() {
               </label>
               <button
                 className="button primary"
-                onClick={upload}
+                onClick={() => upload()}
                 disabled={uploading || !health}
               >
                 {uploading ? `Uploading ${progress}%` : "Analyze model"}

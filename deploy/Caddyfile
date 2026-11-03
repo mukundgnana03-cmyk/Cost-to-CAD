@@ -2,5 +2,5 @@
     basic_auth {
         {$CAD_AUTH_USER} {$CAD_AUTH_HASH}
     }
-    reverse_proxy frontend:8080
+    reverse_proxy app:8000
 }

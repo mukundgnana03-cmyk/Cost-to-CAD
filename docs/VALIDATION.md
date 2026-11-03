@@ -24,3 +24,14 @@ No public deployment or environment publication was performed. Production authen
 ## Follow-up: OpenAI and upload access
 
 Added a Responses API adapter with configurable GPT model, independent local editing mode, a browser-opening Docker launcher, and an HTTPS server deployment override. OpenAI request structure, four rendered-image attachments, intent validation and material-fact preservation are tested using mocked HTTP. No live OpenAI credential or GPT-6 availability is claimed. Server deployment is pending the user's target/access details.
+
+## Single-application packaging
+
+The default deployment now bundles the React build, FastAPI, OpenCascade and Blender into one application, served at one origin. A single STEP selection automatically uploads and processes the part; no Analyze click or separate backend address is needed.
+
+- Unified image build: successful.
+- Browser smoke against the unified container at a single port: passed automatic upload, four real Blender renders, selected-hole enlargement, updated volume, immutable versions, viewer picking, edge mode, mobile layout and JavaScript-error checks.
+- Remaining geometry, AI-boundary, metadata and static-serving checks: 8 passed (the real rendering path was exercised by the browser run).
+- Single-service Compose and the optional HTTPS ingress override: configuration validation passed.
+- Render blueprint added for one hosted application with persistent model storage. No live Render deployment is claimed; account login and confirmation of the provider's compute/storage plan are still needed.
+- Final persistent-disk startup check: a deliberately root-owned mounted volume was initialized successfully; the web interface and health API returned HTTP 200 on the same port, Blender was available, model storage was writable, and the main application process ran as UID 10001.

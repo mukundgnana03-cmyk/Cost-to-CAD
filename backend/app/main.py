@@ -11,6 +11,7 @@ from pathlib import Path
 import cadquery as cq
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from . import geometry, integrations
 
@@ -382,3 +383,30 @@ for metadata in ROOT.glob("*/project.json"):
             message="Worker interrupted",
         )
         write(metadata, current)
+
+
+# Register after API routes: a single deployed service serves both the UI and CAD jobs.
+def mount_web(application, directory):
+    directory = Path(directory).resolve()
+    if not (directory / "index.html").is_file():
+        return
+    assets = directory / "assets"
+    if assets.is_dir():
+        application.mount("/assets", StaticFiles(directory=assets), name="web-assets")
+
+    @application.get("/{web_path:path}", include_in_schema=False)
+    def web(web_path: str):
+        if web_path == "api" or web_path.startswith("api/"):
+            raise HTTPException(404, "API route not found")
+        requested = (directory / web_path).resolve()
+        if not requested.is_relative_to(directory):
+            raise HTTPException(404)
+        if requested.is_file():
+            return FileResponse(requested)
+        return FileResponse(directory / "index.html")
+
+
+mount_web(
+    app,
+    os.getenv("CAD_WEB_DIR", Path(__file__).resolve().parents[2] / "frontend" / "dist"),
+)

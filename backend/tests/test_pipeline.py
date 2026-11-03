@@ -314,3 +314,28 @@ def test_no_api_key_required(monkeypatch):
         "fillet 1 mm", "edge-id", dict(length=1, width=1, height=1)
     )
     assert intent.operation == "fillet" and source == "local-command"
+
+
+def test_single_application_serves_ui_assets_and_api(tmp_path):
+    from fastapi import FastAPI
+
+    web = tmp_path / "web"
+    (web / "assets").mkdir(parents=True)
+    (web / "index.html").write_text("<html>FORM CAD upload</html>")
+    (web / "assets" / "app.js").write_text('console.log("CAD")')
+    outside = tmp_path / "private.txt"
+    outside.write_text("not public")
+    combined = FastAPI()
+
+    @combined.get("/api/health")
+    def health():
+        return {"status": "ok"}
+
+    main.mount_web(combined, web)
+    client = TestClient(combined)
+    assert "FORM CAD upload" in client.get("/").text
+    assert client.get("/assets/app.js").status_code == 200
+    assert client.get("/api/health").json() == {"status": "ok"}
+    assert client.get("/api/missing").status_code == 404
+    assert "FORM CAD upload" in client.get("/workspace/model").text
+    assert "not public" not in client.get("/%2e%2e/private.txt").text
